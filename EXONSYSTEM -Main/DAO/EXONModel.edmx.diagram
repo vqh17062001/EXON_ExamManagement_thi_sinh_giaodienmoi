@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0d462feb73d147839f0d44d1223f3ed3" Name="Diagram1">
+        <EntityTypeShape EntityType="EXONModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.ANSWER" Width="1.5" PointX="8.25" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.ANSWERS_TEMP" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.ANSWERSHEET_DETAILS" Width="1.5" PointX="8.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.ANSWERSHEET_SPEAKING" Width="1.5" PointX="5.25" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.ANSWERSHEET_WRITING" Width="1.5" PointX="5.25" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.ANSWERSHEET" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.BAGOFTEST" Width="1.5" PointX="1.5" PointY="39.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.CONTESTANTPAUSE" Width="1.5" PointX="3" PointY="27.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.CONTESTANT" Width="1.5" PointX="3.75" PointY="36" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.CONTESTANTS_SHIFTS" Width="1.5" PointX="6" PointY="36.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.CONTESTANTS_TESTS" Width="1.5" PointX="0.75" PointY="27.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.CONTEST" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.DIVISION_SHIFTS" Width="1.5" PointX="1.5" PointY="45" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.DIVISIONSHIFT_SUPERVISOR" Width="1.5" PointX="6" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.DIVSIONSHIFT_PAUSE" Width="1.5" PointX="3.75" PointY="47.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.EXAMINATIONCOUNCIL_POSITIONS" Width="1.5" PointX="0.75" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.EXAMINATIONCOUNCIL_STAFFS" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.FINGERPRINT" Width="1.5" PointX="6" PointY="41" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.LOCATION" Width="1.5" PointX="0.75" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.PART" Width="1.5" PointX="3" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.POSITION" Width="1.5" PointX="3.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.QUESTION" Width="1.5" PointX="3.75" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.QUESTIONS_TEMP" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.ROOMDIAGRAM" Width="1.5" PointX="3.75" PointY="50.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.ROOMTEST" Width="1.5" PointX="1.5" PointY="50.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.SCHEDULE" Width="1.5" PointX="0.75" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.SHIFT" Width="1.5" PointX="1.5" PointY="54.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.SHIFTSPAUSE" Width="1.5" PointX="3.75" PointY="54.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.SPEAKING_TEACHER" Width="1.5" PointX="7.5" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.STAFF" Width="1.5" PointX="0.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.STAFFS_POSITIONS" Width="1.5" PointX="6" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.SUBJECT" Width="1.5" PointX="1.5" PointY="31.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.SUBQUESTION" Width="1.5" PointX="6" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.SUBQUESTIONS_TEMP" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.sysdiagram" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.TEST_DETAILS" Width="1.5" PointX="6" PointY="28.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.TESTNUMBER" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.TEST" Width="1.5" PointX="1.5" PointY="34.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.VIOLATION" Width="1.5" PointX="6" PointY="33.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.VIOLATIONS_CONTESTANTS" Width="1.5" PointX="8.25" PointY="37" IsExpanded="true" />
+        <EntityTypeShape EntityType="EXONModel.WRITING_TEACHER" Width="1.5" PointX="10.5" PointY="15.25" IsExpanded="true" />
+        <AssociationConnector Association="EXONModel.FK_dbo_ANSWERS_dbo_SUBQUESTIONS_SubQuestionID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_ANSWERSHEET_DETAILS_dbo_ANSWERSHEETS_AnswerSheetID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_ANSWERSHEET_DETAILS_dbo_SUBQUESTIONS_SubQuestionID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_ANSWERSHEET_SPEAKING_dbo_ANSWERSHEETS_AnswerSheetID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_SPEAKING_TEACHER_dbo_ANSWERSHEET_SPEAKING_AnswerSheetSpeakingID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_ANSWERSHEET_WRITING_dbo_ANSWERSHEETS_AnswerSheetID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_WRITING_TEACHER_dbo_ANSWERSHEET_WRITING_AnswerSheetWritingID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_ANSWERSHEETS_dbo_CONTESTANTS_TESTS_ContestantTestID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_ANSWERSHEETS_dbo_STAFFS_StaffID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_BAGOFTESTS_dbo_DIVISION_SHIFTS_DivisionShiftID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_TESTS_dbo_BAGOFTESTS_BagOfTestID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_CONTESTANTPAUSE_dbo_CONTESTANTS_TESTS_ContestantTestID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_CONTESTANTS_SHIFTS_dbo_CONTESTANTS_ContestantID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_FINGERPRINTS_dbo_CONTESTANTS_ContestantID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_CONTESTANTS_SHIFTS_dbo_DIVISION_SHIFTS_DivisionShiftID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_CONTESTANTS_SHIFTS_dbo_ROOMDIAGRAMS_RoomDiagramID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_CONTESTANTS_SHIFTS_dbo_SCHEDULES_ScheduleID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_VIOLATIONS_CONTESTANTS_dbo_CONTESTANTS_SHIFTS_ContestantShiftID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_CONTESTANTS_TESTS_dbo_TESTS_TestID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_EXAMINATIONCOUNCIL_STAFFS_dbo_CONTESTS_ContestID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_LOCATIONS_dbo_CONTESTS_ContestID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_SHIFTS_dbo_CONTESTS_ContestID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_DIVISION_SHIFTS_dbo_ROOMTESTS_RoomTestID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_DIVISION_SHIFTS_dbo_SHIFTS_ShiftID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_DIVISIONSHIFT_SUPERVISOR_dbo_DIVISION_SHIFTS_DivisionShiftID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_DIVSIONSHIFT_PAUSE_dbo_DIVISION_SHIFTS_DivisionShiftID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_DIVISIONSHIFT_SUPERVISOR_dbo_STAFFS_SupervisorID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_EXAMINATIONCOUNCIL_STAFFS_dbo_EXAMINATIONCOUNCIL_POSITIONS_ExaminationCouncil_PositionID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_EXAMINATIONCOUNCIL_STAFFS_dbo_LOCATIONS_LocationID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_EXAMINATIONCOUNCIL_STAFFS_dbo_STAFFS_StaffID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_ROOMTESTS_dbo_LOCATIONS_LocationID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_PARTS_SCHEDULES" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_PARTS_STAFFS" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_STAFFS_POSITIONS_dbo_POSITIONS_PositionID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_SUBQUESTIONS_dbo_QUESTIONS_QuestionID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_TEST_DETAILS_dbo_QUESTIONS_QuestionID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_ROOMDIAGRAMS_dbo_ROOMTESTS_RoomTestID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_SCHEDULES_dbo_SUBJECTS_SubjectID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_SHIFTSPAUSE_dbo_SHIFTS_ShiftID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_SPEAKING_TEACHER_dbo_STAFFS_TeacherID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_STAFFS_POSITIONS_dbo_STAFFS_StaffID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_WRITING_TEACHER_dbo_STAFFS_TeacherID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_TESTS_dbo_SUBJECTS_SubjectID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_TEST_DETAILS_dbo_TESTS_TestID" ManuallyRouted="false" />
+        <AssociationConnector Association="EXONModel.FK_dbo_VIOLATIONS_CONTESTANTS_dbo_VIOLATIONS_ViolationID" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
