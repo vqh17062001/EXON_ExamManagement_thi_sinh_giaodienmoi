@@ -1006,6 +1006,11 @@ namespace EXONSYSTEM
             float rResult = 0;
             float sResult = 0;
 
+            ///// 2025 add bonus variable
+            float bonus = 0;
+            float maxBonus = 0;
+            Dictionary<int, int> numOfcorrectSubQues = new Dictionary<int, int>();
+
             //DTO.LoadingForm = new frmLoading();
             //DTO.LoadingForm.TotalProgress = 3;
             /////  DTO.LoadingForm.TotalProgress = 40;
@@ -1013,7 +1018,7 @@ namespace EXONSYSTEM
             //DTO.LoadingForm.Owner = this;
             //DTO.LoadingForm.Show();
             //s(true);
-            sResult = (float)Math.Round(TestBUS.Instance.SumScore(CILogged, Sql), 0);
+            sResult = (float)Math.Round(TestBUS.Instance.SumScore(CILogged, Sql), 2);
 
             if (WarningCount >= 3)
             {
@@ -1029,7 +1034,7 @@ namespace EXONSYSTEM
                 foreach (AnswersheetDetail ad in lstAHD)
                 {
 
-                    rResult = TestBUS.Instance.CheckAnswers(ad, lstLQuestion, Sql);
+                    rResult = TestBUS.Instance.CheckAnswers(ad, lstLQuestion, ref numOfcorrectSubQues, Sql);
                     if (rResult > 0)
                     {
                         result += rResult;
@@ -1038,6 +1043,45 @@ namespace EXONSYSTEM
                 }
 
                 rASH.TestScores = (float)Math.Round(result, 2);
+
+                //tinh bonus
+                List<QuesIDwithBonus> LquesIDwithBonus = TestBUS.Instance.GetListQuestionWithBonusScore(Sql);
+
+                foreach (var pair in numOfcorrectSubQues)
+                {
+
+                    /// tim trong CTDL BONUS doan from, to ma co questionID = pair.Key va from<=pair.Value<to => testcore+=bonus
+                    foreach (var quesIDwithBonus in LquesIDwithBonus)
+                    {
+
+                        if (pair.Key == quesIDwithBonus.QuestionID && quesIDwithBonus.From <= pair.Value && pair.Value <= quesIDwithBonus.To)
+                        {
+
+                            //rASH.TestScores +=  float.Parse(quesIDwithBonus.Bonus.ToString());
+
+                            rASH.TestScores += (float)quesIDwithBonus.Bonus;
+
+                            break;
+                        }
+
+                    }
+                }
+                //tinh maxbonus
+
+                {
+                    // this.CILogged.ScheduleID -> structureID -> from max theo tung structuredetail -> sum bonus
+                    int ScheduleID = this.CILogged.ScheduleID;
+                    List<StructureDetailIDwithMaxBonus> LstructureDetailIDwithMaxBonus = TestBUS.Instance.GetListMaxBonusWithStructureID(ScheduleID, Sql);
+
+                    foreach (var structureDetailIDwithMaxBonus in LstructureDetailIDwithMaxBonus)
+                    {
+
+                        sResult += (float)structureDetailIDwithMaxBonus.maxBonus * (int)structureDetailIDwithMaxBonus.NumOfQuestionInTest;
+
+                    }
+
+                }
+
                 rASH.Status = Constant.STATUS_FINISHED;
 
                 File.SetAttributes(frmAuthentication.logFile, FileAttributes.ReadOnly);

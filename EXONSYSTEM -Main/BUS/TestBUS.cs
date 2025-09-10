@@ -33,13 +33,26 @@ namespace BUS
 		{
 			TestDAO.Instance.GetListQuestionByContestantInformation(CI, out rLstQuest, out lstPartOfTest, out IsContinute, out numberQuestionsOfTest, out EC, sql);
 		}
-		public float CheckAnswers(AnswersheetDetail ad, List<List<Questions>> lstLQuestion, SqlConnection sql)
+		public float CheckAnswers(AnswersheetDetail ad, List<List<Questions>> lstLQuestion, ref Dictionary<int, int> numOfcorrectSubQues, SqlConnection sql)
 		{
-			return TestDAO.Instance.CheckAnswers(ad, lstLQuestion, sql);
+			return TestDAO.Instance.CheckAnswers(ad, lstLQuestion, ref numOfcorrectSubQues, sql);
 		}
 		public float SumScore(ContestantInformation CI, SqlConnection sql)
 		{
 			return TestDAO.Instance.SumScore(CI, sql);
+		}
+
+		public List<QuesIDwithBonus> GetListQuestionWithBonusScore(SqlConnection sql)
+		{
+
+			return TestDAO.Instance.GetListQuestionWithBonusScore(sql);
+
+		}
+
+		public List<StructureDetailIDwithMaxBonus> GetListMaxBonusWithStructureID(int ScheduleID, SqlConnection sql)
+		{
+
+			return TestDAO.Instance.GetListMaxBonusWithStructureID(ScheduleID, sql);
 		}
 
 	}

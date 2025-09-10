@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Text.RegularExpressions;
 namespace DAO.DAO
 {
     public class AnswersheetDetailDAO
@@ -247,26 +247,99 @@ namespace DAO.DAO
             return lstAnswerContent;
         }
 
+        //private string ChuanHoa(string answerContent)
+        //{
+        //    string s = answerContent.Trim();
+        //    while (s.IndexOf(" ") >= 0)
+        //    {
+        //        s = s.Replace(" ", "");
+        //        s = s.Replace("\n", "");
+        //    }
+        //    StringBuilder kq = new StringBuilder(s.Length);
+        //    foreach (char c in s)
+        //    {
+        //        if (Char.IsLower(c))
+        //        {
+        //            kq.Append(char.ToUpper(c));
+        //        }
+        //        else kq.Append(c);
+
+        //    }
+        //    return kq.ToString();
+        //}
+
         private string ChuanHoa(string answerContent)
         {
-            string s = answerContent.Trim();
-            while (s.IndexOf(" ") >= 0)
-            {
-                s = s.Replace(" ", "");
-                s = s.Replace("\n", "");
-            }
-            StringBuilder kq = new StringBuilder(s.Length);
-            foreach (char c in s)
-            {
-                if (Char.IsLower(c))
-                {
-                    kq.Append(char.ToUpper(c));
-                }
-                else kq.Append(c);
+            if (string.IsNullOrWhiteSpace(answerContent)) return string.Empty;
 
-            }
-            return kq.ToString();
+            // 1) Bỏ toàn bộ khoảng trắng (space, tab, \r, \n)
+            string s = Regex.Replace(answerContent, @"\s+", "");
+
+            // 2) Đưa về UPPER (giữ nguyên số/ký hiệu)
+            var sb = new StringBuilder(s.Length);
+            foreach (char c in s)
+                sb.Append(char.IsLower(c) ? char.ToUpperInvariant(c) : c);
+            s = sb.ToString();
+
+            // 3) Nếu là số -> chuẩn hoá số (loại bỏ 0 đầu/cuối)
+            return NormalizeNumberIfApplicable(s);
         }
+
+        private string NormalizeNumberIfApplicable(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return s;
+
+            // Dấu +/- ở đầu (nếu có)
+            int start = 0;
+            char sign = '\0';
+            if (s[0] == '+' || s[0] == '-')
+            {
+                sign = s[0];
+                start = 1;
+            }
+            string body = s.Substring(start);
+
+            // Chỉ chấp nhận: số [thập phân tuỳ chọn với , hoặc .]
+            if (!Regex.IsMatch(body, @"^\d+([,.]\d+)?$"))
+                return s; // Không phải "số thuần" -> trả về như cũ (đã UPPER)
+
+            // Xác định dấu thập phân (nếu có)
+            char sep = body.Contains(',') ? ',' : (body.Contains('.') ? '.' : '\0');
+            string intPart, fracPart = null;
+            if (sep != '\0')
+            {
+                int idx = body.IndexOf(sep);
+                intPart = body.Substring(0, idx);
+                fracPart = body.Substring(idx + 1);
+            }
+            else
+            {
+                intPart = body;
+            }
+
+            // Bỏ 0 ở đầu phần nguyên
+            intPart = intPart.TrimStart('0');
+            if (intPart.Length == 0) intPart = "0";
+
+            // Bỏ 0 ở cuối phần thập phân (nếu có)
+            if (fracPart != null)
+            {
+                int i = fracPart.Length - 1;
+                while (i >= 0 && fracPart[i] == '0') i--;
+                fracPart = (i >= 0) ? fracPart.Substring(0, i + 1) : "";
+            }
+
+            sep = ',';
+            // Lắp lại kết quả
+            string result = (fracPart != null && fracPart.Length > 0) ? intPart + sep + fracPart : intPart;
+
+
+            // "-0" -> "0"
+            if (result == "0") return "0";
+            return (sign == '-') ? "-" + result : result;
+        }
+
+
 
         private bool CheckAnswerContent(string strDapAn, string strTraLoi)
         {

@@ -154,6 +154,11 @@ namespace DAO.DAO
                                     q.IsQuestionContent = ques.IsQuestionContent;
                                     q.Score = SQ.Score != null ? (float)SQ.Score : default(float);
                                     q.ListAnswer = GetListAnswerByListAnswerID(sq.data.ListAnswerID, sql);
+
+                                    //// bonus 2025
+                                    q.TopicID = ques.TopicID;
+                                    // q.QuestionTypeID = ques.QuestionTypeID;
+                                    /////
                                     int HeightToDisplayForSub = 0;
                                     if (SQ.HeightToDisplay.HasValue)
                                     {
@@ -237,6 +242,9 @@ namespace DAO.DAO
                         rLLstQuest = null;
                         EC = new ErrorController(Common.STATUS_ERROR, "Không thể nhận TEST_DETAIL bằng TestID=" + CI.TestID);
                     }
+
+
+
                 }
                 catch (Exception ex)
                 {
@@ -246,6 +254,72 @@ namespace DAO.DAO
                 }
             }
         }
+
+        public List<QuesIDwithBonus> GetListQuestionWithBonusScore(SqlConnection sql)
+        {
+
+            // quesIDwithBonus = new QuesIDwithBonus();
+            string queryString = @"select QUESTIONS.QuestionID, SDB.[From], SDB.[To], SDB.Bonus    
+
+                                  from QUESTIONS
+                                  join TOPICS on QUESTIONS.TopicID = TOPICS.TopicID
+                                  join STRUCTURE_DETAILS SD on TOPICS.TopicID = SD.TopicID
+                                  join STRUCTURE_DETAIL_BONUS SDB on SD.StructureDetailID = SDB.StructureDetailID
+                                  where QUESTIONS.Level = SD.Level";
+
+            List<QuesIDwithBonus> LquesIDwithBonus = Utils.ExcuteObject<QuesIDwithBonus>(queryString, sql).ToList();
+
+
+            return LquesIDwithBonus;
+
+
+        }
+
+        public List<StructureDetailIDwithMaxBonus> GetListMaxBonusWithStructureID(int ScheduleID, SqlConnection sql)
+        {
+
+            // quesIDwithBonus = new QuesIDwithBonus();
+            string queryString = @"select   STRUCTURE_DETAILS.NumberQuestions/NULLIF(QUESTIONS.NumberSubQuestion, 0)  as NumOfQuestionInTest,STRUCTURE_DETAILS.StructureDetailID, max (STRUCTURE_DETAIL_BONUS.Bonus) as maxBonus
+
+                                    from STRUCTURES
+                                    join STRUCTURE_DETAILS on STRUCTURES.StructureID =STRUCTURE_DETAILS.StructureID
+                                    join STRUCTURE_DETAIL_BONUS on STRUCTURE_DETAIL_BONUS.StructureDetailID = STRUCTURE_DETAILS.StructureDetailID
+
+									join TOPICS on TOPICS.TopicID = STRUCTURE_DETAILS.TopicID
+									join QUESTIONS on QUESTIONS .TopicID = TOPICS.TopicID
+				
+                                    where STRUCTURES.StructureID = ( select top(1) STRUCTURES.StructureID
+									                                    from SCHEDULES
+									                                    join STRUCTURES on SCHEDULES.ScheduleID = STRUCTURES.ScheduleID
+									                                    where SCHEDULES.ScheduleID = @ScheduleID
+								                                    )
+
+																
+
+                                    group by STRUCTURE_DETAILS.NumberQuestions, STRUCTURE_DETAILS.StructureDetailID ,STRUCTURES.StructureID ,QUESTIONS.NumberSubQuestion";
+
+            List<SqlParameter> para = new List<SqlParameter>();
+
+
+            para.Add(new SqlParameter("@ScheduleID", ScheduleID));
+
+            try
+            {
+                List<StructureDetailIDwithMaxBonus> LstructDetailWithMaxBonus = Utils.ExcuteObject<StructureDetailIDwithMaxBonus>(queryString, para, sql).ToList();
+                return LstructDetailWithMaxBonus;
+
+            }
+            catch (Exception e)
+            {
+
+                return null;
+            }
+
+
+
+
+        }
+
 
         private List<int> HandleGetNumberIdexAnswerInQuestion(string data)
         {
@@ -357,9 +431,13 @@ namespace DAO.DAO
 
 
 
-        public float CheckAnswers(AnswersheetDetail ad, List<List<Questions>> lstLQuestion, SqlConnection sql)
+        public float CheckAnswers(AnswersheetDetail ad, List<List<Questions>> lstLQuestion, ref Dictionary<int, int> numOfcorrectSubQues, SqlConnection sql)
         {
             float result = 0;
+            int key = 0;
+            int count = 0;
+
+
 
             using (EXON_SYSTEM_TESTEntities DB = new EXON_SYSTEM_TESTEntities())
             {
@@ -379,9 +457,11 @@ namespace DAO.DAO
                 }
                 else
                 {
-                    foreach (List<Questions> lstQuestion in lstLQuestion)
+                    foreach (List<Questions> lstQuestion in lstLQuestion) // may be lstQuestion is question in DB
                     {
-                        foreach (Questions questions in lstQuestion)
+                        //numOfcorrectSubQues = new Dictionary<int, int>();
+
+                        foreach (Questions questions in lstQuestion) // may be question is subquestion in DB
                         {
                             List<Answer> lstAn = questions.ListAnswer.Where(x => x.SubQuestionID == ad.SubQuestionID).ToList();
                             if (lstAn.Count > 0)
@@ -392,10 +472,23 @@ namespace DAO.DAO
                                     if (A.IsCorrect)
                                     {
                                         result = (float)A.Score.Value;
+                                        if (!numOfcorrectSubQues.ContainsKey(questions.QuestionID))
+                                        {
+                                            key = questions.QuestionID;
+                                            numOfcorrectSubQues.Add(key, 1);
+                                        }
+                                        else
+                                        {
+                                            numOfcorrectSubQues.TryGetValue(questions.QuestionID, out count);
+                                            count++;
+                                            numOfcorrectSubQues[questions.QuestionID] = count;
+                                        }
+                                        //InsertScoreIntoAnswersheetDetail(ad,result,sql);
                                     }
                                 }
                             }
                         }
+
                     }
 
 
@@ -415,5 +508,84 @@ namespace DAO.DAO
             }
             return result;
         }
+
+
+
+        private float InsertScoreIntoAnswersheetDetail(AnswersheetDetail ad, float result, SqlConnection sql)
+        {
+
+            ErrorController EC;
+
+            // nếu có bonus 
+            // 
+
+
+
+            // nếu ko có bonus
+            SqlCommand sqlcmd = new SqlCommand("update ANSWERSHEET_DETAILS set " + " Score=@Score where AnswerSheetDetailID=@id ;", sql);
+            sqlcmd.Parameters.Add("@id", ad.AnswerSheetDetailID);
+            sqlcmd.Parameters.Add("@Score", result);
+            int row = 0;
+            while (row == 0)
+            {
+                row = sqlcmd.ExecuteNonQuery();
+
+            }
+            EC = new ErrorController(Common.STATUS_OK, "Thay đổi status thành STATUS_CHANGED: 4002");
+
+
+            return result;
+        }
+
+
+
+
+        private float AddBonusScore(AnswersheetDetail ad, List<List<Questions>> lstLQuestion, SqlConnection sql)
+        {
+
+            float result = 0;
+
+
+
+            using (EXON_SYSTEM_TESTEntities DB = new EXON_SYSTEM_TESTEntities())
+            {
+                ANSWERSHEET_DETAILS ans = new ANSWERSHEET_DETAILS();
+
+
+
+                foreach (List<Questions> lstQuestion in lstLQuestion) // may be lstQuestion is question in DB
+                {
+
+
+
+
+                    int count_corerectAns_inQues = 0;
+                    foreach (Questions questions in lstQuestion) // may be question is subquestion in DB
+                    {
+                        List<Answer> lstAn = questions.ListAnswer.Where(x => x.SubQuestionID == ad.SubQuestionID).ToList();
+                        if (lstAn.Count > 0)
+                        {
+                            Answer A = lstAn.SingleOrDefault(y => y.AnswerID == ad.ChoosenAnswer);
+                            if (A != null)
+                            {
+                                if (A.IsCorrect)
+                                {
+                                    count_corerectAns_inQues++;
+
+                                    result = (float)A.Score.Value + count_corerectAns_inQues; // tthêm query để tính bonus ;
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+
+
+            }
+            return result;
+
+        }
+
     }
 }

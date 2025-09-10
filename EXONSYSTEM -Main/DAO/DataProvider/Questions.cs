@@ -40,6 +40,14 @@ namespace DAO.DataProvider
         public int HighToDisplayForSubQuestion { get; set; }
 
         public float Score { get; set; }
+
+		/// <summary>
+		/// Thuộc tính được thêm vào để phục vụ tính điểm bonus
+		/// </summary>
+		public Nullable<int> TopicID { get; set; }
+		//public Nullable<int> QuestionTypeID { get; set; }
+		public int numOfCorrectSubquestions = 0;
+
 		public Questions()
 		{
 			this.ListAnswer = new List<Answer>();

@@ -36,7 +36,13 @@ namespace DAO
         public Nullable<int> Type { get; set; }
         public byte[] Audio { get; set; }
         public Nullable<int> HeightToDisplay { get; set; }
-    
+
+        /// <summary>
+        ///  bonus 2025
+        /// </summary>
+        public Nullable<int> TopicID { get; set; }
+        // public Nullable<int> QuestionTypeID { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SUBQUESTION> SUBQUESTIONS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -57,6 +63,13 @@ namespace DAO
             this.Type = row["Type"] as Nullable<int> != null ? Convert.ToInt32(row["Type"]) : default(Nullable<int>);
             this.Audio = row["Audio"] as byte[] != null ? row["Audio"] as byte[] : null;
             this.HeightToDisplay = row["HeightToDisplay"] as Nullable<int> != null ? Convert.ToInt32(row["HeightToDisplay"]) : default(Nullable<int>);
+
+            /// <summary>
+            ///  bonus 2025  
+            /// </summary>
+            this.TopicID = row["TopicID"] as Nullable<int> != null ? Convert.ToInt32(row["TopicID"]) : default(Nullable<int>);
+            //this.TopicID = row["QuestionTypeID"] as Nullable<int> != null ? Convert.ToInt32(row["QuestionTypeID"]) : default(Nullable<int>);
+
         }
     }
 }
